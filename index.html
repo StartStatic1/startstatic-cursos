@@ -1,0 +1,317 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TREINAMENTO STARTSTATIC: MOD APK</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-main: #f0f4f8;
+            --bg-panel: #ffffff;
+            --color-celeste: #0ea5e9; 
+            --text-main: #111827;
+            --text-muted: #4b5563;
+            --color-green: #16a34a; 
+        }
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            font-family: system-ui, -apple-system, Roboto, Helvetica, Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+        }
+        .logo {
+            max-width: 120px;
+            height: auto;
+            margin: 0 auto 10px;
+            display: block;
+            border-radius: 10px;
+        }
+        .marca-info {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+        h1 {
+            color: var(--color-celeste);
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 26px;
+            font-weight: 800;
+        }
+        .descricao {
+            background: var(--bg-panel);
+            border-left: 5px solid var(--color-celeste);
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            font-size: 15px;
+            line-height: 1.6;
+            text-align: left;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+        }
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 16px;
+            margin: 15px 0;
+            background: var(--bg-panel);
+            color: var(--color-celeste);
+            border: 2px solid var(--color-celeste);
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .btn:hover {
+            background: var(--color-celeste);
+            color: white;
+        }
+        .btn:disabled {
+            border-color: #e5e7eb;
+            color: #9ca3af;
+            background: #f9fafb;
+            cursor: not-allowed;
+        }
+        
+        /* Seção Extra (Pronta para Monetização) */
+        .info-extra {
+            margin-top: 40px;
+            padding: 25px 20px;
+            background: var(--bg-panel);
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            text-align: left;
+            font-size: 14px;
+            color: var(--text-muted);
+            line-height: 1.7;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.02);
+        }
+        .info-extra h3 {
+            color: var(--color-celeste);
+            margin-top: 0;
+            font-size: 18px;
+            font-weight: 800;
+        }
+        .info-extra p {
+            margin-bottom: 15px;
+        }
+        .info-extra p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 100;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(3px);
+        }
+        .modal-content {
+            background-color: var(--bg-panel);
+            padding: 25px;
+            width: 90%;
+            max-width: 400px;
+            border-radius: 16px;
+            text-align: left;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        .close-btn {
+            color: #9ca3af;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        /* Área do PIX */
+        .pix-container {
+            background: #f8fafc;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 15px;
+            margin: 15px 0;
+            text-align: center;
+        }
+        .pix-detalhes {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: bold;
+        }
+        .chave-pix {
+            font-size: 18px;
+            font-weight: 800;
+            color: var(--text-main);
+            display: block;
+            margin-bottom: 12px;
+        }
+        .btn-copy {
+            background: #f1f5f9;
+            border: 1px solid var(--color-celeste);
+            color: var(--color-celeste);
+            padding: 8px 15px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: bold;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .btn-copy:active {
+            transform: scale(0.95);
+        }
+
+        .input-group {
+            margin-bottom: 15px;
+        }
+        .input-group label {
+            display: block;
+            margin-bottom: 6px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        .input-group input {
+            width: 100%;
+            padding: 12px;
+            background: #f3f4f6;
+            border: 2px solid #e5e7eb;
+            border-radius: 10px;
+            box-sizing: border-box;
+        }
+        .btn-social {
+            width: 100%;
+            padding: 14px;
+            margin-top: 10px;
+            border: none;
+            border-radius: 10px;
+            color: white;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <img src="image_3.png" alt="Logotipo StartStatic" class="logo">
+
+    <div class="marca-info">
+        <span>STARTSTATIC</span>
+        <span>•</span>
+        <span>Grupo Tutor</span>
+    </div>
+
+    <h1>TREINAMENTO MOD APK</h1>
+    
+    <div class="descricao">
+        <p><strong>Domine a Engenharia Reversa no Android.</strong></p>
+        <p>Aprenda na prática a modificar aplicativos, alterar layouts e injetar servidores usando apenas o seu celular com o MT Manager.</p>
+    </div>
+
+    <button class="btn" onclick="abrirModal()">
+        ▶ MÓDULO 1: INSERIR LOGIN NO LAYOUT
+    </button>
+
+    <button class="btn" disabled>
+        <i class="fas fa-lock"></i> MÓDULO 2: MUDAR SERVIDOR (EM BREVE)
+    </button>
+    
+    <button class="btn" disabled>
+        <i class="fas fa-lock"></i> MÓDULO 3: MODIFICAR LAYOUT (EM BREVE)
+    </button>
+
+    <div class="info-extra">
+        <h3>Sobre a StartStatic</h3>
+        <p>A StartStatic é dedicada a trazer o melhor conteúdo prático sobre modificação e estruturação de aplicativos Android. Nosso objetivo é transformar a complexidade do código em passos simples que você pode executar direto do seu smartphone.</p>
+        <p>Nesta página, você terá acesso a ferramentas exclusivas, scripts e atualizações contínuas sobre o mundo do desenvolvimento mobile.</p>
+        </div>
+
+    <div id="meuModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="fecharModal()">&times;</span>
+            <h2 style="text-align: center; color: var(--color-celeste); margin-top: 0;">LIBERAR ACESSO</h2>
+            
+            <p style="font-size: 14px; margin-bottom: 5px;">1. Pagamento via PIX (Valor: <strong style="color: var(--color-green);">R$ 19,90</strong>):</p>
+            
+            <div class="pix-container">
+                <div class="pix-detalhes">BRADESCO • CHAVE CPF</div>
+                <span class="chave-pix" id="chavePix">84999585659</span>
+                <button class="btn-copy" onclick="copiarPix()">
+                    <i class="fas fa-copy"></i> COPIAR CHAVE
+                </button>
+            </div>
+            
+            <div class="input-group">
+                <label>Seu Nome ou Apelido:</label>
+                <input type="text" id="nomeCliente" placeholder="Ex: João Modder">
+            </div>
+
+            <p style="font-size: 14px; text-align: center;">2. Envie o comprovante:</p>
+
+            <button class="btn-social" style="background: #25D366;" onclick="enviarComprovante('whatsapp')">
+                <i class="fab fa-whatsapp"></i> WHATSAPP
+            </button>
+
+            <button class="btn-social" style="background: #0088cc;" onclick="enviarComprovante('telegram')">
+                <i class="fab fa-telegram-plane"></i> TELEGRAM
+            </button>
+        </div>
+    </div>
+
+    <script>
+        function abrirModal() { document.getElementById("meuModal").style.display = "flex"; }
+        function fecharModal() { document.getElementById("meuModal").style.display = "none"; }
+
+        function copiarPix() {
+            const chave = document.getElementById("chavePix").innerText;
+            navigator.clipboard.writeText(chave).then(() => {
+                alert("Chave CPF copiada com sucesso!");
+            });
+        }
+
+        function enviarComprovante(plataforma) {
+            let nome = document.getElementById("nomeCliente").value;
+            if(!nome) { alert("Preencha seu nome!"); return; }
+
+            let msg = "Olá, Mestre! Fiz o pagamento do Módulo 1 (R$ 19,90).\nNome: " + nome;
+            
+            // O número de celular fica apenas aqui no código, invisível na tela para o usuário
+            let numeroOculto = "5584999585659"; 
+
+            if (plataforma === 'whatsapp') {
+                window.open("https://wa.me/" + numeroOculto + "?text=" + encodeURIComponent(msg), "_blank");
+            } else {
+                navigator.clipboard.writeText(msg);
+                alert("Mensagem copiada! Cole no Telegram com o comprovante.");
+                window.open("https://t.me/StartStaticCursos", "_blank");
+            }
+        }
+    </script>
+
+</body>
+</html>
