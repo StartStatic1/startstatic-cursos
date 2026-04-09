@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -84,7 +83,6 @@
             cursor: not-allowed;
         }
         
-        /* Seção Extra (Pronta para Monetização) */
         .info-extra {
             margin-top: 40px;
             padding: 25px 20px;
@@ -110,7 +108,6 @@
             margin-bottom: 0;
         }
 
-        /* Modal */
         .modal {
             display: none;
             position: fixed;
@@ -142,7 +139,19 @@
             cursor: pointer;
         }
 
-        /* Área do PIX */
+        /* Caixa de Alerta (Módulos Separados) */
+        .alerta-modulo {
+            background-color: #fffbeb;
+            color: #b45309;
+            border-left: 4px solid #f59e0b;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 13px;
+            margin-bottom: 15px;
+            font-weight: 600;
+            line-height: 1.5;
+        }
+
         .pix-container {
             background: #f8fafc;
             border: 2px solid #e2e8f0;
@@ -179,9 +188,6 @@
             align-items: center;
             gap: 8px;
         }
-        .btn-copy:active {
-            transform: scale(0.95);
-        }
 
         .input-group {
             margin-bottom: 15px;
@@ -213,6 +219,31 @@
             justify-content: center;
             gap: 10px;
             cursor: pointer;
+        }
+
+        .toast {
+            visibility: hidden;
+            min-width: 250px;
+            background-color: var(--color-celeste);
+            color: white;
+            text-align: center;
+            border-radius: 10px;
+            padding: 16px;
+            position: fixed;
+            z-index: 1000;
+            left: 50%;
+            bottom: 20px;
+            transform: translateX(-50%);
+            font-size: 15px;
+            font-weight: bold;
+            box-shadow: 0 5px 15px rgba(14, 165, 233, 0.4);
+            opacity: 0;
+            transition: opacity 0.3s, bottom 0.3s;
+        }
+        .toast.show {
+            visibility: visible;
+            opacity: 1;
+            bottom: 40px;
         }
     </style>
 </head>
@@ -249,17 +280,21 @@
         <h3>Sobre a StartStatic</h3>
         <p>A StartStatic é dedicada a trazer o melhor conteúdo prático sobre modificação e estruturação de aplicativos Android. Nosso objetivo é transformar a complexidade do código em passos simples que você pode executar direto do seu smartphone.</p>
         <p>Nesta página, você terá acesso a ferramentas exclusivas, scripts e atualizações contínuas sobre o mundo do desenvolvimento mobile.</p>
-        </div>
+    </div>
 
     <div id="meuModal" class="modal">
         <div class="modal-content">
             <span class="close-btn" onclick="fecharModal()">&times;</span>
-            <h2 style="text-align: center; color: var(--color-celeste); margin-top: 0;">LIBERAR ACESSO</h2>
+            <h2 style="text-align: center; color: var(--color-celeste); margin-top: 0; margin-bottom: 15px;">LIBERAR ACESSO</h2>
+            
+            <div class="alerta-modulo">
+                <i class="fas fa-exclamation-triangle"></i> <strong>ATENÇÃO:</strong> O pagamento libera o acesso <strong>APENAS ao Módulo 1</strong>. Os outros módulos serão vendidos separadamente.
+            </div>
             
             <p style="font-size: 14px; margin-bottom: 5px;">1. Pagamento via PIX (Valor: <strong style="color: var(--color-green);">R$ 19,90</strong>):</p>
             
             <div class="pix-container">
-                <div class="pix-detalhes">BRADESCO • CHAVE CPF</div>
+                <div class="pix-detalhes">BRADESCO • CHAVE PIX</div>
                 <span class="chave-pix" id="chavePix">84999585659</span>
                 <button class="btn-copy" onclick="copiarPix()">
                     <i class="fas fa-copy"></i> COPIAR CHAVE
@@ -283,32 +318,45 @@
         </div>
     </div>
 
+    <div id="toastAviso" class="toast">Mensagem copiada!</div>
+
     <script>
         function abrirModal() { document.getElementById("meuModal").style.display = "flex"; }
         function fecharModal() { document.getElementById("meuModal").style.display = "none"; }
 
+        function mostrarAviso(mensagem) {
+            let toast = document.getElementById("toastAviso");
+            toast.innerText = mensagem;
+            toast.classList.add("show");
+            setTimeout(function() {
+                toast.classList.remove("show");
+            }, 3000); 
+        }
+
         function copiarPix() {
             const chave = document.getElementById("chavePix").innerText;
             navigator.clipboard.writeText(chave).then(() => {
-                alert("Chave CPF copiada com sucesso!");
+                mostrarAviso("Chave PIX copiada com sucesso! ✅");
             });
         }
 
         function enviarComprovante(plataforma) {
             let nome = document.getElementById("nomeCliente").value;
-            if(!nome) { alert("Preencha seu nome!"); return; }
+            if(!nome) { mostrarAviso("⚠️ Por favor, preencha seu nome!"); return; }
 
             let msg = "Olá, Mestre! Fiz o pagamento do Módulo 1 (R$ 19,90).\nNome: " + nome;
             
-            // O número de celular fica apenas aqui no código, invisível na tela para o usuário
             let numeroOculto = "5584999585659"; 
 
             if (plataforma === 'whatsapp') {
                 window.open("https://wa.me/" + numeroOculto + "?text=" + encodeURIComponent(msg), "_blank");
             } else {
-                navigator.clipboard.writeText(msg);
-                alert("Mensagem copiada! Cole no Telegram com o comprovante.");
-                window.open("https://t.me/StartStaticCursos", "_blank");
+                navigator.clipboard.writeText(msg).then(() => {
+                    mostrarAviso("Mensagem copiada! Abrindo Telegram... 🚀");
+                    setTimeout(() => {
+                        window.open("https://t.me/StartStaticCursos", "_blank");
+                    }, 1500); 
+                });
             }
         }
     </script>
