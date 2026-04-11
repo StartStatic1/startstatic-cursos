@@ -264,12 +264,12 @@
         <p>Aprenda na prática a modificar aplicativos, alterar layouts e injetar servidores usando apenas o seu celular com o MT Manager.</p>
     </div>
 
-    <button class="btn" onclick="abrirModal()">
+    <button class="btn" onclick="abrirModal(1)">
         ▶ MÓDULO 1: INSERIR LOGIN NO LAYOUT
     </button>
 
-    <button class="btn" disabled>
-        <i class="fas fa-lock"></i> MÓDULO 2: MUDAR SERVIDOR (EM BREVE)
+    <button class="btn" onclick="abrirModal(2)">
+        ▶ MÓDULO 2: MUDAR SERVIDOR
     </button>
     
     <button class="btn" disabled>
@@ -285,13 +285,13 @@
     <div id="meuModal" class="modal">
         <div class="modal-content">
             <span class="close-btn" onclick="fecharModal()">&times;</span>
-            <h2 style="text-align: center; color: var(--color-celeste); margin-top: 0; margin-bottom: 15px;">LIBERAR ACESSO</h2>
+            <h2 id="modalTitulo" style="text-align: center; color: var(--color-celeste); margin-top: 0; margin-bottom: 15px;">LIBERAR ACESSO</h2>
             
             <div class="alerta-modulo">
-                <i class="fas fa-exclamation-triangle"></i> <strong>ATENÇÃO:</strong> O pagamento libera o acesso <strong>APENAS ao Módulo 1</strong>. Os outros módulos serão vendidos separadamente.
+                <i class="fas fa-exclamation-triangle"></i> <span id="modalAviso"><strong>ATENÇÃO:</strong> O pagamento libera o acesso <strong>APENAS ao Módulo 1</strong>.</span>
             </div>
             
-            <p style="font-size: 14px; margin-bottom: 5px;">1. Pagamento via PIX (Valor: <strong style="color: var(--color-green);">R$ 19,90</strong>):</p>
+            <p style="font-size: 14px; margin-bottom: 5px;">1. Pagamento via PIX (Valor: <strong id="modalPreco" style="color: var(--color-green);">R$ 19,90</strong>):</p>
             
             <div class="pix-container">
                 <div class="pix-detalhes">BRADESCO • CHAVE PIX</div>
@@ -321,7 +321,29 @@
     <div id="toastAviso" class="toast">Mensagem copiada!</div>
 
     <script>
-        function abrirModal() { document.getElementById("meuModal").style.display = "flex"; }
+        // Variáveis para guardar a escolha do usuário
+        let moduloSelecionado = 1;
+        let precoSelecionado = "19,90";
+
+        function abrirModal(modulo) { 
+            moduloSelecionado = modulo;
+            
+            // Alterar dinamicamente os textos da janela de pagamento
+            if(modulo === 1) {
+                document.getElementById("modalTitulo").innerText = "LIBERAR MÓDULO 1";
+                document.getElementById("modalAviso").innerHTML = "<strong>ATENÇÃO:</strong> O pagamento libera o acesso <strong>APENAS ao Módulo 1</strong>.";
+                document.getElementById("modalPreco").innerText = "R$ 19,90";
+                precoSelecionado = "19,90";
+            } else if (modulo === 2) {
+                document.getElementById("modalTitulo").innerText = "LIBERAR MÓDULO 2";
+                document.getElementById("modalAviso").innerHTML = "<strong>ATENÇÃO:</strong> O pagamento libera o acesso <strong>APENAS ao Módulo 2</strong>.";
+                document.getElementById("modalPreco").innerText = "R$ 24,90";
+                precoSelecionado = "24,90";
+            }
+
+            document.getElementById("meuModal").style.display = "flex"; 
+        }
+
         function fecharModal() { document.getElementById("meuModal").style.display = "none"; }
 
         function mostrarAviso(mensagem) {
@@ -344,7 +366,8 @@
             let nome = document.getElementById("nomeCliente").value;
             if(!nome) { mostrarAviso("⚠️ Por favor, preencha seu nome!"); return; }
 
-            let msg = "Olá, Mestre! Fiz o pagamento do Módulo 1 (R$ 19,90).\nNome: " + nome;
+            // A mensagem agora usa o módulo e preço corretos
+            let msg = "Olá, Mestre! Fiz o pagamento do Módulo " + moduloSelecionado + " (R$ " + precoSelecionado + ").\nNome: " + nome;
             
             let numeroOculto = "5584999585659"; 
 
