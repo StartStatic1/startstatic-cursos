@@ -272,8 +272,8 @@
         ▶ MÓDULO 2: MUDAR SERVIDOR
     </button>
     
-    <button class="btn" disabled>
-        <i class="fas fa-lock"></i> MÓDULO 3: MODIFICAR LAYOUT (EM BREVE)
+    <button class="btn" onclick="abrirModal(3)">
+        ▶ MÓDULO 3: MODIFICAR LAYOUT
     </button>
 
     <div class="info-extra">
@@ -339,6 +339,11 @@
                 document.getElementById("modalAviso").innerHTML = "<strong>ATENÇÃO:</strong> O pagamento libera o acesso <strong>APENAS ao Módulo 2</strong>.";
                 document.getElementById("modalPreco").innerText = "R$ 24,90";
                 precoSelecionado = "24,90";
+            } else if (modulo === 3) {
+                document.getElementById("modalTitulo").innerText = "LIBERAR MÓDULO 3";
+                document.getElementById("modalAviso").innerHTML = "<strong>ATENÇÃO:</strong> O pagamento libera o acesso <strong>APENAS ao Módulo 3</strong>.";
+                document.getElementById("modalPreco").innerText = "R$ 10,00";
+                precoSelecionado = "10,00";
             }
 
             document.getElementById("meuModal").style.display = "flex"; 
